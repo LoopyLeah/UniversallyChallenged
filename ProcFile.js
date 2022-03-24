@@ -1,1 +1,1 @@
-web: node ./hello.js
+node ./hello.js
