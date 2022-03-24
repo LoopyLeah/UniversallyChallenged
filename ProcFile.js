@@ -1,1 +1,1 @@
-node ./hello.js
+node ./index.js
