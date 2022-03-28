@@ -1,6 +1,7 @@
 {
   "name": "universally-challenged",
   "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node index.js"
   },
   "dependencies": {
@@ -8,13 +9,13 @@
     "http-server": "^14.1.0",
     "socket.io": "^4.4.1"
   },
-  {
-  "buildpacks": [
-     {
-        "url": "heroku/nodejs"
-     }
-    ]
-  }
+  "buildpacks": [{
+    "url": "heroku/nodejs"
+    
+  
+  
+  }]
+  
 
 }
 
