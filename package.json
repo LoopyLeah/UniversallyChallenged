@@ -3,12 +3,17 @@
   "scripts": {
     "start": "node index.js"
   },
+  
   "dependencies": {
     "express": "^4.17.3",
     "http-server": "^14.1.0",
     "socket.io": "^4.4.1"
-  }
-
+  },
+  "buildpacks": [
+     {
+        "url": "heroku/nodejs"
+     }
+    ]
   
 
 }
