@@ -1,5 +1,5 @@
 {
-  "name": "myapp",
+  "name": "universally-challenged",
   "private": true,
   "scripts": {
     "start": "meteor run",
