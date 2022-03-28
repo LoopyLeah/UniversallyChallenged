@@ -1,14 +1,23 @@
 {
-  "name": "universally-challenged",
+  "name": "myapp",
+  "private": true,
   "scripts": {
-    "start": "node index.js"
+    "start": "meteor run",
+    "test": "meteor test --once --driver-package meteortesting:mocha",
+    "test-app": "TEST_WATCH=1 meteor test --full-app --driver-package meteortesting:mocha",
+    "visualize": "meteor --production --extra-packages bundle-visualizer"
   },
-  
   "dependencies": {
-    "express": "^4.17.3",
-    "http-server": "^14.1.0",
-    "socket.io": "^4.4.1"
+    "@babel/runtime": "^7.15.4",
+    "meteor-node-stubs": "^1.2.1",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2"
+  },
+  "meteor": {
+    "mainModule": {
+      "client": "client/main.jsx",
+      "server": "server/main.js"
+    },
+    "testModule": "tests/main.js"
   }
-
-
 }
