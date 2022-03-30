@@ -5,7 +5,7 @@
   "main": "app.js",
   "scripts": {
     "start": "node app.js",
-     "test": "test.js"
+     "test": "echo \"No test specified\""
   },
   "dependencies": {
     "ejs": "^2.6.1",
