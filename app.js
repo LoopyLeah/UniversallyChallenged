@@ -2,7 +2,7 @@
 const express = require("express")
 const app = express()
 const port = 3000
-const io = require('socket.io')(server)
+const io = require('socket.io')
 
 
 
