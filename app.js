@@ -1,7 +1,7 @@
 // create an express app
 const express = require("express")
 const app = express()
-port = process.env.PORT || 8080;
+port = process.env.PORT || 80;
 const io = require('socket.io')
 
 
