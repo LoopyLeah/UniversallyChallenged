@@ -12,9 +12,11 @@ app.use(express.static("public"))
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`)
 // define the first route
+});
+
 app.get("/", function (req, res) {
   res.send("<h1>Hello World!</h1>")
-})
+});
 
 // start the server listening for requests
 app.listen(process.env.PORT || 3000, 
