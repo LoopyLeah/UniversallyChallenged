@@ -22,5 +22,5 @@ app.get("/", function (req, res) {
 });
 
 // start the server listening for requests
-app.listen(port, 
+server.listen(app.get('port'), 
 	() => console.log("Server is running..."));
