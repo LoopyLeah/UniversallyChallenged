@@ -11,11 +11,5 @@
     "ejs": "^2.6.1",
     "express": "^4.17.1",
     "socket.io": "^2.2.0"
-  },
-  "engines": {
-    "node": "14.x"
-  },
-  "devDependencies": {
-    "nodemon": "^1.19.0"
   }
 }
