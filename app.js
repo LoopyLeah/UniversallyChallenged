@@ -1,7 +1,7 @@
 // create an express app
 const express = require("express")
 const app = express()
-const port = 3000
+const port = process.env.PORT || 80;
 const io = require('socket.io')
 
 
@@ -22,5 +22,5 @@ app.get("/", function (req, res) {
 });
 
 // start the server listening for requests
-app.listen(process.env.PORT || 3000, 
+app.listen(port, 
 	() => console.log("Server is running..."));
