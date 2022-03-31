@@ -3,8 +3,6 @@ const express = require("express")
 const app = express()
 port = process.env.PORT;
 const io = require('socket.io')
-var http=require('http');
-
 
 app.get('/', (req, res) => {
   res.send('Hello World!')
