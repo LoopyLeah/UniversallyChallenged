@@ -18,6 +18,8 @@ io = socketIO(server);
 //list of rooms, with the players
 let rooms = {};
 
+let arrayOfPlayers = []
+
 //when a person loads the website 
 io.on('connection', function (socket) {
   console.log('a user connected');
@@ -41,7 +43,7 @@ io.on('connection', function (socket) {
     //create a new room object
     rooms[roomCode] = {
       roomCode: roomCode,
-      players: [],
+      players: arrayOfPlayers,
       gameStarted: false,
       gameOver: false,
     }
@@ -79,7 +81,7 @@ io.on('connection', function (socket) {
       score: 0,
       ready: false,
       votes: 0,
-      isOddOneOut: false
+      isOddOneOut: false,
     });
 
     console.log("player " + data.name + " added to room: " + data.code);
@@ -113,7 +115,7 @@ function sendPlayerNamesForLobby(roomCode) {
 
 function getPlayerNamesForVoting(roomCode) {
   //display all players in the lobby
-  console.log("getPlayerNamesForVoting called" + roomCode);
-  //io.sockets.in(roomCode).emit('player-names', rooms[roomCode].players);
+  console.log("getPlayerNamesForVoting called");
+  console.log(arrayOfPlayers);
+  //io.emit('player-names', rooms[roomCode].arrayOfPlayers);
 }
-
