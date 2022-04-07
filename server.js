@@ -78,6 +78,8 @@ io.on('connection', function (socket) {
       name: data.name,
       score: 0,
       ready: false,
+      votes: 0,
+      isOddOneOut: false
     });
 
     console.log("player " + data.name + " added to room: " + data.code);
