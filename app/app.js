@@ -82,7 +82,7 @@ socket.on('player-names', data => {
     console.log("lobby names: " + data);
     playerList.innerHTML = "";
     //for each person in the lobby, create a p element in the list
-    for(let i = 0; i < data.length; i++) {
+    for(let i = 1; i < data.length+1; i++) {
         console.log(data[i].name);
         let p = document.createElement("p");
         p.innerHTML = `${i}. ${data[i].name}`;//number of person + name
