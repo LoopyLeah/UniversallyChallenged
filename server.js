@@ -1,8 +1,8 @@
-let express = require('express'),
-  app = express(),
-  http = require('http'),
-  socketIO = require('socket.io'),
-  server, io;
+ const httpServer = require("http").createServer();
+const io = require("socket.io")(httpServer, {
+  // ...
+});
+
 
 app.use(express.static(__dirname + '/app'));
 
@@ -13,7 +13,6 @@ app.get('/', function(req, res) {
 server = http.Server(app);
 server.listen(process.env.PORT || 3000);
 
-io = socketIO(server);
 
 //list of rooms, with the players
 let rooms = {};
