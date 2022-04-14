@@ -24,7 +24,7 @@ setInterval(() => io.emit('time', new Date().toTimeString()), 1000);
 
 
 
-app.use(express.static(__dirname + '/app'));
+
 
 
 server = http.Server(app);
