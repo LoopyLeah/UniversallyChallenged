@@ -16,21 +16,6 @@ io.on('connection', (socket) => {
   socket.on('disconnect', () => console.log('Client disconnected'));
 });
 
-setInterval(() => io.emit('time', new Date().toTimeString()), 1000);
-
-
-
-
-
-
-
-
-
-
-server = http.Server(app);
-server.listen(process.env.PORT || 3000);
-
-
 //list of rooms, with the players
 let rooms = {};
 
