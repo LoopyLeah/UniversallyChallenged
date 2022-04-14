@@ -18,7 +18,9 @@ io = socketIO(server);
 //list of rooms, with the players
 let rooms = {};
 
-let arrayOfPlayers = []
+let clientRooms = {}; 
+
+//let arrayOfPlayers = []
 
 //when a person loads the website 
 io.on('connection', function (socket) {
@@ -92,17 +94,45 @@ io.on('connection', function (socket) {
   })
 
   //when the game is started
-  socket.on('start-game', function(){
+  // socket.on('start-game', function(){
+  //   console.log("starting game");
+  //   io.emit('game-started');
+  // })
+  socket.on('start-game', function(data){
     console.log("starting game");
     io.emit('game-started');
+    //emitGameState(roomCode, rooms[roomCode]);
+    //emitNextStageToAll(data.code);
   })
+
+  // socket.on('game-over', function(data){
+  //   console.log("game over");
+  //   io.emit('game-over');
+  // })
 
   //when voting-start is called, emit the players in the lobby
   socket.on('voting-start', function(data) {
     console.log("voting start");
+    socket.emit('room-code', data.code);
+    //sendPlayerNamesForLobby(data.code);
     //io.emit('player-names', rooms[data.code].players); //this func doesnt know what playes is
     //console.log('player-names');
     //getPlayerNamesForVoting(data.code);
+  })
+
+  socket.on('reveal-waiting', function(data) { 
+    console.log("reveal waiting");
+    io.emit('reveal-waiting');
+  })
+
+  socket.on('reveal-item', function(data) {
+    console.log("reveal item");
+    io.emit('reveal-item');
+  })
+
+  socket.on('players-ready', function(data) {
+    console.log("players ready");
+    io.emit('players-ready');   
   })
 
 });
@@ -119,3 +149,18 @@ function sendPlayerNamesForLobby(roomCode) {
 //   console.log(arrayOfPlayers);
 //   //io.emit('player-names', rooms[roomCode].arrayOfPlayers);
 // }
+
+// function emitGameState(roomCode, gameState) {
+//   console.log("emitGameState called");
+//   io.sockets.in(roomCode).emit('gameState', JSON.stringify(gameState));
+// }
+
+function emitNextStageToAll(roomCode) {
+  console.log("emitNextStageToAll called");
+  io.to(roomCode).emit('nextStage');
+}
+
+function displayNextPageToAll(roomCode) {
+  console.log("displayNextPageToAll called");
+  io.sockets.in(roomCode).emit('nextPage');
+}
