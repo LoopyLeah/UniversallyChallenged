@@ -1,4 +1,4 @@
- const httpServer = require("http").createServer();
+const httpServer = require("http").createServer();
 const io = require("socket.io")(httpServer, {
   // ...
 });
@@ -6,9 +6,6 @@ const io = require("socket.io")(httpServer, {
 
 app.use(express.static(__dirname + '/app'));
 
-app.get('/', function(req, res) {
-  res.sendFile("app");
-});
 
 server = http.Server(app);
 server.listen(process.env.PORT || 3000);
