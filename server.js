@@ -6,7 +6,7 @@ const INDEX = 'app/app.js';
 
 const server = express()
 
-  .use((req, res) => res.sendFile("public/app.js"))
+  .use((req, res) => res.sendFile(INDEX))
   .listen(PORT, () => console.log(`Listening on ${PORT}`));
 
 const io = socketIO(server);
