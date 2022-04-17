@@ -1,30 +1,24 @@
-const express = require('express');
-const socketIO = require('socket.io');
-
-const PORT = process.env.PORT || 3000;
-const INDEX = 'app/app.js';
-
-const server = express()
-
-  .use((req, res) => res.sendFile(INDEX))
-  .listen(PORT, () => console.log(`Listening on ${PORT}`));
-
-const io = socketIO(server);
-
-
-io.on('connection', (socket) => {
-  console.log('Client connected');
-  socket.on('disconnect', () => console.log('Client disconnected'));
-});
+//setting up server routing
+const port = process.env.PORT || 3000;
+var express = require('express');
+var http = require('http');
+var app = express();
+var server = http.createServer(app);
+var io = require('socket.io')(server);
+//Server-side file handling
+app.use(express.static('files'))
+app.use(express.static(__dirname + '/public'));
+app.listen(port)
+//Game server-side code
 
 //list of rooms, with the players
 let rooms = {};
 
-let clientRooms = {}; 
+let clientRooms = {};
 
 //let arrayOfPlayers = []
 
-//when a person loads the website 
+//when a person loads the website
 io.on('connection', function (socket) {
   console.log('a user connected');
   socket.on('disconnect', function () {
@@ -39,7 +33,7 @@ io.on('connection', function (socket) {
   //when a player enters a NEW room/game
   socket.on('new-game', function(name) {
     console.log("user id: " + socket.id);
-    //make a random 6 digit room code 
+    //make a random 6 digit room code
     let roomCode = Math.floor(Math.random() * 1000000);
     console.log("room code: " + roomCode);
     socket.join(roomCode);
@@ -52,7 +46,7 @@ io.on('connection', function (socket) {
       gameOver: false,
     }
 
-    //add the player object to the room 
+    //add the player object to the room
     rooms[roomCode].players.push({
       id: socket.id,
       name: name,
@@ -66,7 +60,7 @@ io.on('connection', function (socket) {
 
     socket.emit('room-code', roomCode);
     sendPlayerNamesForLobby(roomCode);
-    //not printing for first person aka host when he is in 
+    //not printing for first person aka host when he is in
     //the new room lobby whereas eevryone in the existing room lobby gets the updates
   });
 
@@ -122,7 +116,7 @@ io.on('connection', function (socket) {
     //getPlayerNamesForVoting(data.code);
   })
 
-  socket.on('reveal-waiting', function(data) { 
+  socket.on('reveal-waiting', function(data) {
     console.log("reveal waiting");
     io.emit('reveal-waiting');
   })
@@ -134,7 +128,7 @@ io.on('connection', function (socket) {
 
   socket.on('players-ready', function(data) {
     console.log("players ready");
-    io.emit('players-ready');   
+    io.emit('players-ready');
   })
 
 });
