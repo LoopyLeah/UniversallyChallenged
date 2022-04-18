@@ -1,4 +1,4 @@
-//socket = io("https://localhost:3000/");
+//var socket = io("https://localhost:3000/");
 var socket = io("https://oddone.herokuapp.com/");
 
 console.log("server started");
@@ -44,8 +44,7 @@ joinGamebutton.addEventListener("click", () => {
         handleGameButtonClick(hideContent, showContent, hideContent, hideContent, hideContent, hideContent, hideContent);
         let playerName = name.value;
         socket.emit("join-game", {code : roomCodeValue, name : playerName});
-    } else {
-        alert("Please enter a valid room code");
+<div className="0"></div>        alert("Please enter a valid room code");
     }
 });
 
