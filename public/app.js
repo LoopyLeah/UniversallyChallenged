@@ -1,6 +1,5 @@
-const socket = io("https://localhost:3000/");
-// const socket = io("https://oddoneoutgame.herokuapp.com/");
-// socket = io("https://oddone.herokuapp.com/");
+//socket = io("https://localhost:3000/");
+socket = io("https://oddone.herokuapp.com/");
 
 console.log("server started");
 
