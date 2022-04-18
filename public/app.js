@@ -1,4 +1,4 @@
- const socket = io();
+const socket = io("https://localhost:3000/");
 // const socket = io("https://oddoneoutgame.herokuapp.com/");
 // socket = io("https://oddone.herokuapp.com/");
 
