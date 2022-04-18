@@ -5,14 +5,15 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Game Menu</title>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/1.3.7/socket.io.min.js"></script>
+  <script src="/socket.io/socket.io.js"></script>
   <link rel="stylesheet" href="styles.css">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500&family=Roboto&display=swap" rel="stylesheet">
   <!--<script src="/socket.io/socket.io.js"></script>-->
   <script>
-    const socket = io("https://localhost:3000/");
+    //const socket = io("https://localhost:3000/");
+    socket = io("https://oddone.herokuapp.com/");
   </script>
   <script src="app.js" defer></script>
 </head>
