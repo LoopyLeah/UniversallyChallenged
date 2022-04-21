@@ -1,6 +1,5 @@
-// const socket = io("http://localhost:3000/");
-// const socket = io("https://oddoneoutgame.herokuapp.com/");
-const socket = io("https://oddone.herokuapp.com/");
+//var socket = io("https://localhost:3000/");
+var socket = io("https://oddone.herokuapp.com/");
 
 console.log("server started");
 
@@ -29,15 +28,15 @@ let hideContent = "none";
 let showContent = "block";
 
 //start new game on click
-newGamebutton.addEventListener("click", () => { 
+newGamebutton.addEventListener("click", () => {
     console.log("new game button clicked");
     //hide choosegame css, show lobby css, hide game css, hide voting css
-    handleGameButtonClick(hideContent, showContent, hideContent, hideContent, hideContent, hideContent, hideContent); 
+    handleGameButtonClick(hideContent, showContent, hideContent, hideContent, hideContent, hideContent, hideContent);
     let playerName = name.value;
     socket.emit("new-game", playerName);
 });
 
-joinGamebutton.addEventListener("click", () => { 
+joinGamebutton.addEventListener("click", () => {
     console.log("join game button clicked");
     //if the code is greater than 0 and a number
     let roomCodeValue = roomCode.value;
@@ -45,8 +44,7 @@ joinGamebutton.addEventListener("click", () => {
         handleGameButtonClick(hideContent, showContent, hideContent, hideContent, hideContent, hideContent, hideContent);
         let playerName = name.value;
         socket.emit("join-game", {code : roomCodeValue, name : playerName});
-    } else {
-        alert("Please enter a valid room code");
+<div className="0"></div>        alert("Please enter a valid room code");
     }
 });
 
@@ -59,7 +57,7 @@ startGameButton.addEventListener("click", () => {
     //socket.emit("start-game");
 });
 
-categoryButton.addEventListener("click", () => { 
+categoryButton.addEventListener("click", () => {
     console.log("category button clicked");
     // let roomCodeValue = roomCode.value;
     let playerName = name.value;
@@ -90,8 +88,8 @@ nextQuestionButton.addEventListener("click", () => {
 });
 
 playAgainButton.addEventListener("click", () => {
-    console.log("play again button clicked"); 
-    handleGameButtonClick(showContent, hideContent, hideContent, hideContent, hideContent, hideContent, hideContent); 
+    console.log("play again button clicked");
+    handleGameButtonClick(showContent, hideContent, hideContent, hideContent, hideContent, hideContent, hideContent);
 });
 
 
@@ -116,7 +114,7 @@ socket.on('room-code', data => {
     roomCodeHeader.innerHTML = data;
 });
 
-//get the names of people in the lobby 
+//get the names of people in the lobby
 socket.on('player-names', data => {
     console.log("lobby names: " + data);
     playerList.innerHTML = "";
