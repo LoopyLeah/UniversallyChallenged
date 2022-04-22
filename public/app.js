@@ -44,7 +44,9 @@ joinGamebutton.addEventListener("click", () => {
         handleGameButtonClick(hideContent, showContent, hideContent, hideContent, hideContent, hideContent, hideContent);
         let playerName = name.value;
         socket.emit("join-game", {code : roomCodeValue, name : playerName});
-<div className="0"></div>        alert("Please enter a valid room code");
+    }
+    else {
+      alert("Please enter a valid room code");
     }
 });
 
