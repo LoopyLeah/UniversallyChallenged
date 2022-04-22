@@ -26,7 +26,27 @@ let clientRooms = {};
 
 //let arrayOfPlayers = []
 
-//when a person loads the website
+io.use((socket, next) => {
+  const sessionID = socket.handshake.auth.sessionID;
+  if (sessionID) {
+    const session = sessionStore.findSession(sessionID);
+    if (session) {
+      socket.sessionID = sessionID;
+      socket.userID = session.userID;
+      socket.username = session.username;
+      return next();
+    }
+  }
+  const username = socket.handshake.auth.username;
+  if (!username) {
+    return next(new Error("invalid username"));
+  }
+  socket.sessionID = randomId();
+  socket.userID = randomId();
+  socket.username = username;
+  next();
+});
+
 io.on("connection", (socket) => {
   // persist session
   sessionStore.saveSession(socket.sessionID, {
@@ -35,11 +55,13 @@ io.on("connection", (socket) => {
     connected: true,
   });
 
-
-  socket.on('chat message', function (msg) {
-    console.log('message from ' + socket.id + ': ' + msg.message);
-    io.emit('message', msg);
+  // emit session details
+  socket.emit("session", {
+    sessionID: socket.sessionID,
+    userID: socket.userID,
   });
+  // join the "userID" room
+  socket.join(socket.userID);
 
   //when a player enters a NEW room/game
   socket.on('new-game', function(name) {
