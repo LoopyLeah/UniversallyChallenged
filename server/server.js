@@ -6,6 +6,9 @@ const http = require('http');
 const server = http.createServer(app);
 const { Server } = require("socket.io");
 const io = new Server(server);
+//session saving
+const { InMemorySessionStore } = require("./sessionStore");
+const sessionStore = new InMemorySessionStore();
 //Server-side file handling
 app.use(express.static('public'))
 app.get('/', (req, res) => {
@@ -24,11 +27,14 @@ let clientRooms = {};
 //let arrayOfPlayers = []
 
 //when a person loads the website
-io.on('connection', function (socket) {
-  console.log('a user connected');
-  socket.on('disconnect', function () {
-    console.log('user disconnected');
+io.on("connection", (socket) => {
+  // persist session
+  sessionStore.saveSession(socket.sessionID, {
+    userID: socket.userID,
+    username: socket.username,
+    connected: true,
   });
+
 
   socket.on('chat message', function (msg) {
     console.log('message from ' + socket.id + ': ' + msg.message);
