@@ -24,18 +24,10 @@ let clientRooms = {};
 //let arrayOfPlayers = []
 
 //when a person loads the website
-io.on("connection", (socket) => {
-  // persist session
-  sessionStore.saveSession(socket.sessionID, {
-    userID: socket.userID,
-    username: socket.username,
-    connected: true,
-  });
-  console.log (userID);
-  // emit session details
-  socket.emit("session", {
-    sessionID: socket.sessionID,
-    userID: socket.userID,
+io.on('connection', function (socket) {
+  console.log('a user connected');
+  socket.on('disconnect', function () {
+    console.log('user disconnected');
   });
 
   socket.on('chat message', function (msg) {
