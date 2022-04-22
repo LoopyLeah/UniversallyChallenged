@@ -9,7 +9,7 @@ const io = new Server(server);
 //Server-side file handling
 //app.use(express.static('public'))
 app.get('/', (req, res) => {
-  res.sendFile('/app/public/app.js');
+  res.sendFile('/app/public/index.html');
 });
 server.listen(port)
 console.log("Server running at:"+port);
