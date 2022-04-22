@@ -60,8 +60,6 @@ io.on("connection", (socket) => {
     sessionID: socket.sessionID,
     userID: socket.userID,
   });
-  // join the "userID" room
-  socket.join(socket.userID);
 
   //when a player enters a NEW room/game
   socket.on('new-game', function(name) {
