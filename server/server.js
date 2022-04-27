@@ -166,7 +166,7 @@ io.on("connection", (socket) => {
 
 function sendPlayerNamesForLobby(roomCode) {
   //send the player names to the lobby
-  io.sockets.in(roomCode).emit('player-names', rooms[roomCode].players);
+  io.local.emit('player-names', rooms[roomCode].players);
   //getPlayerNamesForVoting(roomCode);
 }
 
