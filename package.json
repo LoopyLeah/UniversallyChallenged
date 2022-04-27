@@ -6,6 +6,9 @@
     "socket.io": "^4.4.1",
     "socket.io-client": "^4.4.1"
   },
+  "engines": {
+	"node": "12.17.x"
+  },
   "scripts": {
     "start": "node server/server.js",
     "dev": "nodemon server/server.js"
