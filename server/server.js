@@ -47,13 +47,12 @@ io.use((socket, next) => {
   next();
 });
 
-io.on("connection", (socket) => {
-  // persist session
-  sessionStore.saveSession(socket.sessionID, {
-    userID: socket.userID,
-    username: socket.username,
-    connected: true,
+io.on('connection', function (socket) {
+  console.log('a user connected');
+  socket.on('disconnect', function () {
+    console.log('user disconnected');
   });
+
 
   // emit session details
   socket.emit("session", {
@@ -166,7 +165,7 @@ io.on("connection", (socket) => {
 
 function sendPlayerNamesForLobby(roomCode) {
   //send the player names to the lobby
-  io.local.emit('player-names', rooms[roomCode].players);
+  io.local.emit('player-names', rooms[roomCode].players);gi
   //getPlayerNamesForVoting(roomCode);
 }
 
