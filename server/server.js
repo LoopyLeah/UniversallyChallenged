@@ -22,26 +22,26 @@ console.log("Server running at:"+port);
 //list of rooms, with the players
 let rooms = {};
 
-let clientRooms = {};
+let clientRooms = {}; 
 
 //let arrayOfPlayers = []
+
+//when a person loads the website 
 io.on('connection', function (socket) {
   console.log('a user connected');
   socket.on('disconnect', function () {
     console.log('user disconnected');
   });
 
-
-  // emit session details
-  socket.emit("session", {
-    sessionID: socket.sessionID,
-    userID: socket.userID,
+  socket.on('chat message', function (msg) {
+    console.log('message from ' + socket.id + ': ' + msg.message);
+    io.emit('message', msg);
   });
 
   //when a player enters a NEW room/game
   socket.on('new-game', function(name) {
     console.log("user id: " + socket.id);
-    //make a random 6 digit room code
+    //make a random 6 digit room code 
     let roomCode = Math.floor(Math.random() * 1000000);
     console.log("room code: " + roomCode);
     socket.join(roomCode);
@@ -54,7 +54,7 @@ io.on('connection', function (socket) {
       gameOver: false,
     }
 
-    //add the player object to the room
+    //add the player object to the room 
     rooms[roomCode].players.push({
       id: socket.id,
       name: name,
@@ -68,7 +68,7 @@ io.on('connection', function (socket) {
 
     socket.emit('room-code', roomCode);
     sendPlayerNamesForLobby(roomCode);
-    //not printing for first person aka host when he is in
+    //not printing for first person aka host when he is in 
     //the new room lobby whereas eevryone in the existing room lobby gets the updates
   });
 
@@ -86,8 +86,6 @@ io.on('connection', function (socket) {
       name: data.name,
       score: 0,
       ready: false,
-      votes: 0,
-      isOddOneOut: false,
     });
 
     console.log("player " + data.name + " added to room: " + data.code);
@@ -98,15 +96,13 @@ io.on('connection', function (socket) {
   })
 
   //when the game is started
-  // socket.on('start-game', function(){
-  //   console.log("starting game");
-  //   io.emit('game-started');
-  // })
   socket.on('start-game', function(data){
     console.log("starting game");
-    io.emit('game-started');
+    //io.emit('game-started');
     //emitGameState(roomCode, rooms[roomCode]);
     //emitNextStageToAll(data.code);
+    socket.emit('game-started', data.code);
+    displayCategoryPageToAll(data.code);
   })
 
   // socket.on('game-over', function(data){
@@ -115,35 +111,50 @@ io.on('connection', function (socket) {
   // })
 
   //when voting-start is called, emit the players in the lobby
-  socket.on('voting-start', function(data) {
-    console.log("voting start");
-    socket.emit('room-code', data.code);
-    //sendPlayerNamesForLobby(data.code);
-    //io.emit('player-names', rooms[data.code].players); //this func doesnt know what playes is
-    //console.log('player-names');
-    //getPlayerNamesForVoting(data.code);
-  })
+  // socket.on('voting-start', function(data) {
+  //   console.log("voting start");
+  //   socket.emit('room-code', data.code);
+  //   //sendPlayerNamesForLobby(data.code);
+  //   //io.emit('player-names', rooms[data.code].players); //this func doesnt know what playes is
+  //   //console.log('player-names');
+  //   //getPlayerNamesForVoting(data.code);
+  // })
 
-  socket.on('reveal-waiting', function(data) {
+  socket.on('reveal-waiting', function(data) { 
     console.log("reveal waiting");
-    io.emit('reveal-waiting');
+    // io.emit('reveal-waiting');
+    socket.emit('reveal-waiting', data.code);
+    displayRevealPlayersPageToAll(data.code);
   })
 
   socket.on('reveal-item', function(data) {
     console.log("reveal item");
-    io.emit('reveal-item');
+    // io.emit('reveal-item');
+    socket.emit('reveal-item', data.code);
+    io.sockets.in(data.code).emit('roles-reveal-stage', rooms[data.code].players);
   })
 
   socket.on('players-ready', function(data) {
     console.log("players ready");
-    io.emit('players-ready');
+    // io.emit('players-ready');   
+    socket.emit('players-ready', data.code);
+    io.sockets.in(data.code).emit('players-ready-stage', rooms[data.code].players);
   })
+
+  socket.on('voting-start', function(data) { 
+    console.log("voting start");
+    socket.emit('voting-start', data.code);
+    io.sockets.in(data.code).emit('voting-start-stage', rooms[data.code].players);
+    //sendPlayerNamesForLobby(data.code);
+  });
 
 });
 
 function sendPlayerNamesForLobby(roomCode) {
   //send the player names to the lobby
-  io.local.emit('player-names', rooms[roomCode].players);gi
+  // io.sockets.in(roomCode).emit('player-names', rooms[roomCode].players);
+  io.local.emit('player-names', rooms[roomCode].players);
+  //console.log(io.sockets.in(roomCode).emit('player-names', rooms[roomCode].players));
   //getPlayerNamesForVoting(roomCode);
 }
 
@@ -159,12 +170,17 @@ function sendPlayerNamesForLobby(roomCode) {
 //   io.sockets.in(roomCode).emit('gameState', JSON.stringify(gameState));
 // }
 
-function emitNextStageToAll(roomCode) {
-  console.log("emitNextStageToAll called");
-  io.to(roomCode).emit('nextStage');
+// function emitNextStageToAll(roomCode) {
+//   console.log("emitNextStageToAll called");
+//   io.to(roomCode).emit('nextStage');
+// }
+
+function displayCategoryPageToAll(roomCode) {
+  console.log("displayNextPageToAll called");
+  io.sockets.in(roomCode).emit('categories-stage', rooms[roomCode].players);
 }
 
-function displayNextPageToAll(roomCode) {
+function displayRevealPlayersPageToAll(roomCode) {
   console.log("displayNextPageToAll called");
-  io.sockets.in(roomCode).emit('nextPage');
+  io.sockets.in(roomCode).emit('player-roles-stage', rooms[roomCode].players);
 }
