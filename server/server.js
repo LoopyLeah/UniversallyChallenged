@@ -7,8 +7,8 @@ const server = http.createServer(app);
 const { Server } = require("socket.io");
 const io = new Server(server);
 //session saving
-const { InMemorySessionStore } = require("./sessionStore");
-const sessionStore = new InMemorySessionStore();
+//const { InMemorySessionStore } = require("./sessionStore");
+//const sessionStore = new InMemorySessionStore();
 //Server-side file handling
 app.use(express.static('public'))
 app.get('/', (req, res) => {
@@ -25,28 +25,6 @@ let rooms = {};
 let clientRooms = {};
 
 //let arrayOfPlayers = []
-
-io.use((socket, next) => {
-  const sessionID = socket.handshake.auth.sessionID;
-  if (sessionID) {
-    const session = sessionStore.findSession(sessionID);
-    if (session) {
-      socket.sessionID = sessionID;
-      socket.userID = session.userID;
-      socket.username = session.username;
-      return next();
-    }
-  }
-  const username = socket.handshake.auth.username;
-  if (!username) {
-    return next(new Error("invalid username"));
-  }
-  socket.sessionID = randomId();
-  socket.userID = randomId();
-  socket.username = username;
-  next();
-});
-
 io.on('connection', function (socket) {
   console.log('a user connected');
   socket.on('disconnect', function () {
