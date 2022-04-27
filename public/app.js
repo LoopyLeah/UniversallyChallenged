@@ -1,5 +1,5 @@
 //var socket = io("https://localhost:3000/");
-var socket = io("https://oddone.herokuapp.com/");
+var socket = io();
 
 console.log("server started");
 
