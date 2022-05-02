@@ -5,11 +5,11 @@ const app = express();
 const http = require('http');
 const server = http.createServer(app);
 const { Server } = require("socket.io");
-const io = new Server(server);
-//session saving
-//const { InMemorySessionStore } = require("./sessionStore");
-//const sessionStore = new InMemorySessionStore();
-//Server-side file handling
+const io = new Server(httpServer, {
+  cors: {
+    origin: "https://oddoneoutgame.herokuapp.com/"
+  }
+});
 app.use(express.static('public'))
 app.get('/', (req, res) => {
   res.sendFile('/app/public/index.html');
