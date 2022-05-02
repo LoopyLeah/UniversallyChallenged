@@ -1,5 +1,6 @@
 //const socket = io("http://localhost:3000/");
-var socket = io();
+const socket = io("https://oddoneoutgame.herokuapp.com/");
+
 
 console.log("server started");
 
