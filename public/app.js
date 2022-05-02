@@ -1,6 +1,9 @@
 //const socket = io("http://localhost:3000/");
 import { io } from "socket.io-client";
-const socket = io("https://oddoneoutgame.herokuapp.com/")
+const socket = io("https://oddoneoutgame.herokuapp.com/", {
+  // WARNING: in that case, there is no fallback to long-polling
+  transports: [ "websocket" ] // or [ "websocket", "polling" ] (the order matters)
+});
 
 console.log("server started");
 
